@@ -2,8 +2,8 @@
 
 Free Chrome extension. Save text, links, code, images and videos once. Find them forever. Everything stays on your device. No account, no tracking, no server.
 
-**Website:** https://YOUR-NAME.github.io/copyit/  
-**Download:** [Releases](https://github.com/YOUR-NAME/copyit/releases/latest) or [Google Drive](https://drive.google.com/file/d/1RxlnzMSdSZsIr42oWVV7r6P7LsoFYRQT/view?usp=sharing)
+**Website:** https://Socialmania99.github.io/copyit/  
+**Download:** [Releases](https://github.com/Socialmania99/copyit/releases/latest) or [Google Drive](https://drive.google.com/file/d/1RxlnzMSdSZsIr42oWVV7r6P7LsoFYRQT/view?usp=sharing)
 
 ## Features
 - Save, search, tag and sort clips into folders. Filters: All, Links, Code, Multimedia.
