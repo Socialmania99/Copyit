@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Copyit Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard">
+<div id="splash" aria-hidden="true"><div class="splash-logo"><svg viewBox="0 0 40 40"><rect width="40" height="40" rx="12" fill="#fff"/><rect class="f" x="11" y="9" width="18" height="22" rx="4"/><rect class="f" x="15" y="7" width="10" height="5" rx="2" stroke="#fff" stroke-width="1.5"/><path d="M15 18h10M15 22h10M15 26h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><b>Copyit</b></div>
+
+<div class="wrap">
+<header class="hero">
+  <div class="brand">
+    <div class="logo big" aria-hidden="true">
+      <svg viewBox="0 0 40 40"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f43f5e"/><stop offset=".55" stop-color="#a21caf"/><stop offset="1" stop-color="#4338ca"/></linearGradient></defs><rect width="40" height="40" rx="12" fill="url(#lg)"/><rect x="11" y="9" width="18" height="22" rx="4" fill="#fff" fill-opacity=".96"/><rect x="15" y="7" width="10" height="5" rx="2" fill="#fff"/><path d="M15 18h10M15 22h10M15 26h6" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div>
+      <span class="eyebrow">Your private clipboard history</span>
+      <h1>Copyit</h1>
+      <p>Your saved text, links, code, rich text, images and videos, all stored locally in Chrome.</p>
+    </div>
+  </div>
+  <div class="actions"><button id="themeBtn" class="ib lg" title="Switch theme"><span class="sw"></span></button>
+    <button id="openSettings" class="ib lg" title="Settings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button id="saveClipboard" class="btn primary"><span class="spin"></span><svg class="i" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="3"/><path d="M9 4V3h6v1M12 9v6M9.5 12.5L12 15l2.5-2.5"/></svg><span>Save clipboard</span></button>
+    <button id="manualAdd" data-add class="btn primary"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add text</button>
+    
+    <button id="donate" class="ib lg donate" title="Support Copyit"><svg class="i" viewBox="0 0 24 24"><path d="M12 20.5s-8-4.7-8-10.4A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 8 2.5c0 5.7-8 10.4-8 10.4z"/></svg></button>
+  </div>
+</header>
+
+<p class="hint banner"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Copyit saves only when you ask: press Ctrl+V here, press “Save clipboard”, drop a file, or use the right-click menu. It does not monitor the clipboard in the background.</span></p>
+
+<section class="insights">
+  <div class="stats">
+    <div class="stat s1"><div class="bubble"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5M3 17.5l9 5 9-5" opacity=".6"/></svg></div><div><b id="statTotal">0</b><span>Saved entries</span></div></div>
+    <div class="stat s2"><div class="bubble"><svg class="i" viewBox="0 0 24 24"><path d="M12 17v5"/><path d="M9 3h6l-1 6 3 3v2H7v-2l3-3z"/></svg></div><div><b id="statPinned">0</b><span>Pinned</span></div></div>
+    <div class="stat s3"><div class="bubble"><svg class="i" viewBox="0 0 24 24"><polygon points="12 2.5 14.9 8.8 21.7 9.6 16.6 14.2 18 21 12 17.5 6 21 7.4 14.2 2.3 9.6 9.1 8.8"/></svg></div><div><b id="statStarred">0</b><span>Starred</span></div></div>
+    <div class="stat s4"><div class="bubble"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="3"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></div><div><b id="statCopies">0</b><span>Total copies</span></div></div>
+  </div>
+  <div class="card chart-card">
+    <div class="card-head"><h3>Activity</h3><span>last 7 days</span></div>
+    <div id="chart" class="chart"></div>
+  </div>
+</section>
+
+<section class="card typebar" id="typeBar" aria-label="Clips by type"></section>
+
+<div class="toolbar">
+  <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg><input id="search" type="search" placeholder="Search clips, #tags, types  ( press / )" autocomplete="off"></label>
+  <nav class="seg" id="filterChips" aria-label="Filter">
+    <span class="thumb"></span>
+    <button class="on" data-filter="all">All</button>
+    <button data-filter="pinned">Pinned</button>
+    <button data-filter="favorites">Starred</button>
+  </nav>
+  <nav class="chips" id="typeChips" aria-label="Type">
+    <button class="on" data-type="all">All types</button>
+    <button data-type="text"><svg class="i" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9"/></svg>Text</button>
+    <button data-type="link"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Links</button>
+    <button data-type="code"><svg class="i" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>Code</button>
+  </nav>
+  <select id="sort" title="Sort"><option value="recent">Newest first</option><option value="oldest">Oldest first</option><option value="copies">Most copied</option><option value="az">A → Z</option></select>
+  <div class="view" id="viewToggle">
+    <button data-view="grid" class="on" title="Grid view"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></button>
+    <button data-view="list" title="List view"><svg class="i" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
+  </div>
+  <span id="count"></span>
+</div>
+<div class="tagbar" id="tagBar" hidden></div>
+<div class="tagbar foldbar" id="folderBar"></div>
+
+<section id="list" class="list grid"></section>
+
+</div>
+
+<button class="fab" data-add title="Add text"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+
+<dialog id="settingsDialog">
+  <div class="set">
+    <h2>Settings</h2>
+    <p>Privacy and storage rules for your vault. Changes save as you make them.</p>
+    <label class="set-row"><span><b>Blur sensitive clips</b><small>Hides passwords, API keys, private keys, JWTs and card numbers until you press Reveal.</small></span><input type="checkbox" id="setBlur" class="switch"></label>
+    <label class="set-row"><span><b>Preview links on hover</b><small>Opens a popup of the page, image, video or PDF a link points to. This loads the site, so turn it off if you want zero network requests.</small></span><input type="checkbox" id="setLink" class="switch"></label>
+    <label class="set-row"><span><b>Leave sensitive clips out of backups</b><small>Skips them when you export JSON or CSV.</small></span><input type="checkbox" id="setExcl" class="switch"></label>
+    <label class="set-row"><span><b>Delete clips older than</b><small>Pinned and starred clips are always kept.</small></span><select id="setDays"><option value="0">Never</option><option value="7">7 days</option><option value="30">30 days</option><option value="90">90 days</option><option value="365">1 year</option></select></label>
+    <label class="set-row"><span><b>Keep at most</b><small>The oldest unpinned, unstarred clips go first.</small></span><select id="setMax"><option value="100">100 clips</option><option value="250">250 clips</option><option value="500">500 clips</option><option value="1000">1,000 clips</option><option value="5000">5,000 clips</option><option value="0">No limit</option></select></label>
+    <section class="datasec" aria-labelledby="dtTitle">
+      <h3 id="dtTitle">Import &amp; export</h3>
+      <div class="set-row nohover"><span><b>Import files</b><small>Pick one or more files: a Copyit backup (.json), .csv, text, Markdown, HTML, SVG, images or videos. Backups are merged without duplicates.</small></span><button type="button" id="importAny" class="btn sm"><svg class="i" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>Choose files</button></div>
+      <div class="set-row nohover"><span><b>Export your clips</b><small>JSON is a full backup with images and videos. CSV, text and Markdown hold text clips only.</small></span></div>
+      <div class="dt-btns"><button type="button" id="exportJson" class="btn sm"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>JSON backup</button><button type="button" id="exportCsv" class="btn sm"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>CSV</button><button type="button" id="exportTxt" class="btn sm"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Text (.txt)</button><button type="button" id="exportMd" class="btn sm"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Markdown (.md)</button></div>
+    </section>
+    <p class="storage" id="storageText"></p>
+    <section class="danger" aria-labelledby="dzTitle">
+      <h3 id="dzTitle"><svg class="i" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.3v.1"/></svg>Danger zone</h3>
+      <label class="set-row"><span><b>Include pinned &amp; starred</b><small>Off: they are kept. On: everything goes.</small></span><input type="checkbox" id="clearIncl" class="switch"></label>
+      <div class="set-row nohover"><span><b>Clear all clips</b><small>Deletes saved clips with their images and videos from this device. Folders stay. You get a few seconds to undo.</small></span><button type="button" id="clearAll" class="btn danger-btn sm">Clear all clips</button></div>
+    </section>
+    <div class="dlg-foot"><span class="spacer"></span><button type="button" class="btn primary sm" id="settingsClose">Done</button></div>
+  </div>
+</dialog>
+<div id="dropzone"><div><svg class="i" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg><b>Drop files to save or import</b><span>images, videos, text, .json, .csv</span></div></div>
+
+<dialog id="addDialog">
+  <form method="dialog" id="addForm">
+    <h2>Add text</h2>
+    <p>Type or paste anything you want to keep.</p>
+    <textarea id="addText" placeholder="Enter text to save…" rows="6"></textarea>
+    <div class="dlg-foot"><span class="kbd">Ctrl + Enter to save</span><span class="spacer"></span><button type="button" class="btn sm" id="addCancel">Cancel</button><button type="submit" class="btn primary sm" id="addSave">Save</button></div>
+  </form>
+</dialog>
+<div id="toasts" aria-live="polite"></div>
+<input id="anyFile" type="file" multiple accept=".json,.csv,.txt,.md,.markdown,.html,.htm,.svg,text/*,image/*,video/*,application/json" hidden>
+<input id="jsonFile" type="file" accept=".json,application/json" hidden>
+<input id="csvFile" type="file" accept=".csv,text/csv" hidden>
+<script src="lib.js"></script>
+<script src="qrcode.js"></script>
+<script src="app.js"></script>
+<script src="share.js"></script>
+</body>
+</html>
