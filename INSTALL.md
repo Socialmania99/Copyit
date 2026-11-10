@@ -6,7 +6,7 @@ Copyit is not on the Chrome Web Store yet. You install it by hand with Chrome De
 
 ## Get the files (pick one)
 - **A. Google Drive:** https://drive.google.com/file/d/1RxlnzMSdSZsIr42oWVV7r6P7LsoFYRQT/view?usp=sharing
-- **B. GitHub Release:** [open the repo, click **Releases**, download `copyit-v1.0.zip`.](https://github.com/Socialmania99/copyit/releases/tag/v1.0.0)
+- **B. GitHub Release:** https://github.com/Socialmania99/copyit/releases/tag/v1.0.0
 - **C. GitHub code:** click green **Code** button, **Download ZIP**. Then use the `extension` folder inside it.
 
 ## Steps
