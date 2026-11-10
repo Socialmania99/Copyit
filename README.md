@@ -35,7 +35,6 @@ Then in Chrome, **Load unpacked**, pick the `extension` folder. No build step. N
 | `extension/` | The Chrome extension (Manifest V3) |
 | `docs/` | Website (GitHub Pages) |
 | `INSTALL.md` | Beginner install guide |
-| `GITHUB_SETUP.md` | Put this repo on GitHub, turn on Pages and Releases |
 | `FEATURES.md` | Full feature notes |
 | `.github/workflows/release.yml` | Builds a zip when you push a `v*` tag |
 
