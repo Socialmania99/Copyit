@@ -2,7 +2,7 @@
 
 Free Chrome extension. Save text, links, code, images and videos once. Find them forever. Everything stays on your device. No account, no tracking, no server.
 
-**Website:** https://Socialmania99.github.io/copyit/  
+**Website:** [https://Socialmania99.github.io/copyit/ ](https://socialmania99.github.io/Copyit/) 
 **Download:** [Releases](https://github.com/Socialmania99/copyit/releases/latest) or [Google Drive](https://drive.google.com/file/d/1RxlnzMSdSZsIr42oWVV7r6P7LsoFYRQT/view?usp=sharing)
 
 ## Features
