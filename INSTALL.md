@@ -2,6 +2,12 @@
 
 Copyit is not on the Chrome Web Store yet. You install it by hand with Chrome Developer mode. About five minutes.
 
+<p align="center">
+  <video src="https://github.com/Socialmania99/Copyit/raw/main/docs/copyit-demo.mp4" controls muted playsinline width="100%"></video>
+</p>
+
+Video: download and install steps start at 0:24. [Watch on YouTube](https://youtu.be/6jOjqSzReSs?t=24).
+
 **Need:** Google Chrome on a computer (Windows, Mac, Linux, Chromebook). Edge and Brave work too: use `edge://extensions` or `brave://extensions`.
 
 ## Get the files (pick one)
