@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Copyit is a free, private clipboard history manager for Chrome. Save text, links, code and images, search them, and copy them back in any format. No account, no tracking.">
+<meta name="copyit-build" content="2026-11-14-cursor-v4">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1014" media="(prefers-color-scheme: dark)">
 <title>Copyit</title>
@@ -400,6 +401,13 @@ html.has-cur input,html.has-cur textarea{cursor:text!important}
 .cur-on .cur-arrow{opacity:1}
 .cur-hover .cur-arrow{filter:drop-shadow(0 10px 12px rgba(36,80,214,.5)) drop-shadow(0 1px 1px rgba(40,56,120,.3))}
 .cur-text .cur-arrow,.cur-away .cur-arrow{opacity:0}
+.trail{position:fixed;left:0;top:0;z-index:9996;pointer-events:none}
+.site-glow{position:fixed;inset:0;z-index:9990;pointer-events:none;background:radial-gradient(360px circle at var(--gx,-500px) var(--gy,-500px),color-mix(in srgb,var(--accent) 9%,transparent),transparent 65%)}
+.tilt{position:relative;transform-style:preserve-3d;will-change:transform}
+.tilt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(260px circle at var(--tx,50%) var(--ty,0%),color-mix(in srgb,var(--accent) 16%,transparent),transparent 62%)}
+.tilt.hot::after{opacity:1}
+.mag-back{transition:translate .35s cubic-bezier(.2,.8,.2,1)!important}
+@media(prefers-reduced-motion:reduce){.site-glow,.trail{display:none}}
 .fx-layer{inset:0;width:auto;height:auto;z-index:9997;overflow:hidden}
 .fx{position:absolute;left:0;top:0;pointer-events:none;will-change:transform,opacity}
 @media(prefers-reduced-motion:reduce){.ent.new,.pp-pop,.pv{animation:none}}
@@ -939,7 +947,7 @@ html.has-cur input,html.has-cur textarea{cursor:text!important}
       p.animate([{ transform: 'translate(0,0) rotate(0) scale(1)', opacity: 1 }, { transform: 'translate(' + Math.cos(ang) * d + 'px,' + Math.sin(ang) * d + 'px) rotate(' + (Math.random() * 240 - 120) + 'deg) scale(.2)', opacity: 0 }], { duration: 520 + Math.random() * 260, easing: 'cubic-bezier(.15,.8,.25,1)' }).onfinish = (function (el) { return function () { el.remove(); }; })(p);
     }
   }
-  if (hero) hero.addEventListener('pointerdown', function (e) { if (e.button === 0 || e.pointerType === 'touch') burst(e.clientX, e.clientY); });
+  document.addEventListener('pointerdown', function (e) { if (e.button === 0 || e.pointerType === 'touch') burst(e.clientX, e.clientY); });
 
   var K = calm ? 0 : 1;
   var cur = document.createElement('div'), root = document.documentElement;
@@ -947,7 +955,16 @@ html.has-cur input,html.has-cur textarea{cursor:text!important}
   var mx = -100, my = -100, px = -100, py = -100, vx = 0, vy = 0, down = false, scl = 1, started = false;
   var browser = $('#demoBrowser'), tiltX = 0, tiltY = 0, tX = 0, tY = 0;
   function clamp(v, m) { return Math.max(-m, Math.min(m, v)); }
-  function start() { if (started) return; started = true; root.classList.add('has-cur', 'cur-on'); }
+  function start() {
+    if (started) return; started = true; root.classList.add('has-cur', 'cur-on');
+    try { console.info('Copyit cursor v4: on (motion ' + (K ? 'full' : 'reduced') + ')'); } catch (x) {}
+    setTimeout(function () {
+      var ok = false;
+      try { var cs = getComputedStyle(cur); ok = parseFloat(cs.opacity) > .5 && cs.backgroundImage !== 'none'; } catch (x) {}
+      if (!ok) { root.classList.remove('has-cur'); try { console.warn('Copyit cursor v4: overlay not visible, using normal cursor image'); } catch (x) {} }
+      else root.setAttribute('data-cursor', 'on');
+    }, 700);
+  }
   window.addEventListener('pointermove', function (e) {
     if (e.pointerType === 'touch') return; try { start(); } catch (x) { return; } mx = e.clientX; my = e.clientY;
     var t = e.target; root.classList.remove('cur-away');
@@ -974,6 +991,48 @@ html.has-cur input,html.has-cur textarea{cursor:text!important}
     if (browser && K) { tiltX += (tX - tiltX) * .08; tiltY += (tY - tiltY) * .08; browser.style.transform = 'perspective(1100px) rotateY(' + (tiltX * 7).toFixed(2) + 'deg) rotateX(' + (-tiltY * 6).toFixed(2) + 'deg)'; }
     requestAnimationFrame(loop);
   })();
+
+  /* ---------- Whole-site cursor effects: trail, glow, magnetic buttons, 3D card tilt ---------- */
+  if (K) {
+    var glow = document.createElement('div'); glow.className = 'site-glow'; glow.setAttribute('aria-hidden', 'true'); document.body.appendChild(glow);
+    var cv = document.createElement('canvas'), cx = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), pts = [], running = false, lx = -99, ly = -99;
+    cv.className = 'trail'; cv.setAttribute('aria-hidden', 'true'); document.body.appendChild(cv);
+    function fit() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px'; }
+    fit(); window.addEventListener('resize', fit);
+    function draw(now) {
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, innerWidth, innerHeight);
+      pts = pts.filter(function (p) { return now - p.t < 560; });
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i], k2 = 1 - (now - p.t) / 560;
+        cx.beginPath(); cx.fillStyle = 'hsla(' + p.h.toFixed(0) + ',88%,62%,' + (k2 * .38).toFixed(3) + ')'; cx.arc(p.x, p.y, 1.5 + k2 * 6.5, 0, 6.283); cx.fill();
+      }
+      if (pts.length) requestAnimationFrame(draw); else { running = false; cx.clearRect(0, 0, innerWidth, innerHeight); }
+    }
+    function addPt(x, y) {
+      var now = performance.now(), h2 = 215 + 110 * (.5 + .5 * Math.sin(now / 700));
+      pts.push({ x: x, y: y, t: now, h: h2 }); if (pts.length > 46) pts.shift();
+      if (!running) { running = true; requestAnimationFrame(draw); }
+    }
+    var magEl = null, tiltEl = null;
+    function release(el, kind) {
+      if (!el) return;
+      if (kind === 'mag') { el.classList.add('mag-back'); el.style.translate = ''; setTimeout(function () { el.classList.remove('mag-back'); }, 380); }
+      else { el.style.transition = 'transform .45s cubic-bezier(.2,.8,.2,1)'; el.style.transform = ''; el.classList.remove('hot'); setTimeout(function () { if (el !== tiltEl) el.style.transition = ''; }, 480); }
+    }
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var x = e.clientX, y = e.clientY, dx = x - lx, dy = y - ly, d = Math.sqrt(dx * dx + dy * dy);
+      if (d > 5) { var n = Math.min(4, Math.floor(d / 8)); for (var s = 1; s <= n; s++) addPt(lx + dx * s / (n + 1), ly + dy * s / (n + 1)); addPt(x, y); lx = x; ly = y; }
+      var t = e.target, m = t.closest ? t.closest('.btn,.mode-btn') : null;
+      if (m !== magEl) { release(magEl, 'mag'); magEl = m; }
+      if (m) { var r = m.getBoundingClientRect(); m.style.translate = ((x - (r.left + r.width / 2)) * .16).toFixed(1) + 'px ' + ((y - (r.top + r.height / 2)) * .28).toFixed(1) + 'px'; }
+      var c = t.closest ? t.closest('.fcard,.step,.qr-card') : null;
+      if (c !== tiltEl) { release(tiltEl, 'tilt'); tiltEl = c; if (c) { c.classList.add('tilt', 'hot'); c.style.transition = 'transform .12s ease-out'; } }
+      if (c) { var q = c.getBoundingClientRect(), px = (x - q.left) / q.width, py = (y - q.top) / q.height; c.style.setProperty('--tx', (px * 100).toFixed(0) + '%'); c.style.setProperty('--ty', (py * 100).toFixed(0) + '%'); c.style.transform = 'perspective(900px) rotateX(' + ((.5 - py) * 9).toFixed(2) + 'deg) rotateY(' + ((px - .5) * 11).toFixed(2) + 'deg) translateZ(0)'; }
+    }, { passive: true });
+    document.addEventListener('mouseleave', function () { release(magEl, 'mag'); release(tiltEl, 'tilt'); magEl = tiltEl = null; });
+    (function glowLoop() { root.style.setProperty('--gx', mx + 'px'); root.style.setProperty('--gy', my + 'px'); requestAnimationFrame(glowLoop); })();
+  }
 })();
 </script>
 </body>
