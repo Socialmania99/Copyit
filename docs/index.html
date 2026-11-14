@@ -1,3 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Copyit is a free, private clipboard history manager for Chrome. Save text, links, code and images, search them, and copy them back in any format. No account, no tracking.">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1014" media="(prefers-color-scheme: dark)">
 <title>Copyit</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -5,7 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: sticky nav, split hero (pitch + static popup mock), facts, feature groups, dashboard mock, how-it-works, share/QR, privacy table, beginner install guide, support, FAQ.
-   Identity: clean and still. One flat palette with a light/dark switch. No animation anywhere. */
+   Identity: clean and still. One flat palette with a light/dark switch. Light motion only: demo popup, 3D cursor and click effects (off for reduced-motion and touch). */
 :root{
   --display:"Bricolage Grotesque","Hanken Grotesk",system-ui,sans-serif;
   --body:"Hanken Grotesk","Segoe UI",system-ui,-apple-system,sans-serif;
@@ -291,6 +299,110 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
   .dash{padding:14px}.nav .btn.sm{display:none}
 }
 @media(max-width:420px){.stats{grid-template-columns:minmax(0,1fr)}.support{grid-template-columns:minmax(0,1fr)}}
+/* Responsive polish */
+html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}
+section[id]{scroll-margin-top:72px}
+h1.big{text-wrap:balance}
+h1.big em{display:block}
+.menu-btn{display:none}
+.menu-btn .m2{display:none}
+.nl-install{display:none}
+@media(min-width:1600px){.in{max-width:1280px}}
+@media(min-width:901px){h1.big{font-size:clamp(48px,4.7vw,68px)}.hero .cta .btn.lg{padding:14px 20px;font-size:15.5px}}
+@media(max-width:900px){
+  .menu-btn{display:inline-grid}
+  .nav-end{gap:8px}
+  .nav-links{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:2px;margin:0;padding:10px 16px 16px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 18px 30px rgba(0,0,0,.14);max-height:calc(100vh - 64px);overflow-y:auto}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 12px;font-size:16px;color:var(--ink)}
+  .nav-links .nl-install{display:flex;justify-content:center;margin-top:8px;color:var(--on);background:var(--btn);font-weight:700}
+  .nav-links .nl-install:hover{color:var(--on);background:var(--btn)}
+  .cmd button{min-height:36px;padding-inline:12px}
+  footer nav{gap:0 16px}footer nav a{padding:10px 2px}
+  .menu-btn[aria-expanded="true"] .m1{display:none}
+  .menu-btn[aria-expanded="true"] .m2{display:inline}
+}
+@media(max-width:700px){
+  .hero{padding-block:36px 52px}
+  .hero .cta .btn{flex:1 1 100%}
+  .trust{gap:8px 16px}
+  .vchap{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 8px;margin-inline:-16px;padding-inline:16px;-webkit-overflow-scrolling:touch}
+  .vchap a{flex:none;padding:10px 14px;scroll-snap-align:start}
+  .video{border-radius:12px}
+  .vid-note,.gnote a{line-height:1.9}
+}
+@media(max-width:380px){
+  h1.big{font-size:40px}
+  .fact b{font-size:30px}
+}
+@media(hover:none){.vchap a:hover{border-color:var(--line);color:var(--ink)}}
+/* Interactive hero demo */
+.hero{position:relative;isolation:isolate}
+.hero>.in{position:relative;z-index:1}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .4s;background:radial-gradient(460px circle at var(--mx,70%) var(--my,30%),color-mix(in srgb,var(--accent) 15%,transparent),transparent 62%)}
+.hero.spot::before{opacity:1}
+.browser{transform-style:preserve-3d;will-change:transform;box-shadow:0 24px 60px -24px rgba(20,24,40,.35)}
+.pp{position:relative}
+.srow{display:flex;gap:8px;align-items:center}
+.srow .search{flex:1;min-width:0;cursor:text}
+.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:13px}
+.search input::placeholder{color:var(--faint)}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.search input::-webkit-search-cancel-button{display:none}
+button.mini,button.chip,button.ibtn,.pp button{font-family:inherit;cursor:pointer}
+button.mini{border:0;min-height:36px;padding:0 12px;transition:transform .15s,filter .15s}
+.ent button.mini{min-height:30px;padding:0 11px}
+button.mini:hover,button.chip:hover{filter:brightness(1.06)}
+button.mini:active,button.chip:active{transform:scale(.94)}
+button.chip{transition:background .2s,color .2s,transform .15s}
+button.chip:not(.on):hover{border-color:var(--accent);color:var(--ink)}
+.ibtn{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.ibtn:hover,.ibtn[aria-expanded="true"]{color:var(--danger);border-color:var(--danger)}
+.ibtn.on{color:var(--danger)}
+.pp-list{max-height:380px;overflow-y:auto;overscroll-behavior:contain;margin-inline:-4px;padding:0 4px 2px;scrollbar-width:thin}
+.pp-list .ent:first-child{margin-top:0}
+.ent{transition:border-color .2s,box-shadow .2s}
+.ent:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));box-shadow:0 6px 18px -10px rgba(36,80,214,.4)}
+.ent.new{animation:entIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes entIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+.star{display:inline-grid;place-items:center;width:26px;height:26px;margin:-4px -4px -4px 0;border-radius:8px;border:0;background:transparent;color:var(--faint)}
+.star:hover{color:var(--c3);background:var(--field)}
+.star.on{color:var(--c3)}.star.on .i{fill:currentColor}
+.meta .x{font-weight:700;color:var(--accent)}
+.foot{flex-wrap:wrap}
+.foot small{min-width:70px}
+.blurred{filter:blur(5px);user-select:none;transition:filter .25s}
+.thumb{margin-top:6px;height:84px;border-radius:9px;background:linear-gradient(135deg,var(--c1),var(--c2) 55%,var(--c3));position:relative;overflow:hidden}
+.thumb::after{content:"";position:absolute;inset:14px 16px;border-radius:7px;background:rgba(255,255,255,.28);box-shadow:0 0 0 1px rgba(255,255,255,.4) inset}
+.pv{grid-column:1/-1;margin-top:9px;padding:10px;border-radius:10px;background:var(--field);border:1px solid var(--line);display:flex;gap:10px;align-items:center;animation:entIn .3s ease}
+.pv i{flex:none;width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,var(--c4),var(--c1));display:block}
+.pv b{display:block;font-size:12.5px}.pv span{font-size:11.5px;color:var(--muted);line-height:1.35;display:block}
+.pp-empty{padding:26px 10px;text-align:center;font-size:13px;color:var(--muted)}
+.pp-pop{position:absolute;z-index:5;right:12px;top:52px;width:min(250px,calc(100% - 24px));padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 40px -12px rgba(0,0,0,.35);font-size:12.5px;color:var(--ink);animation:entIn .25s ease}
+.pp-pop[hidden]{display:none}
+.pp-pop h5{font:800 13px var(--display);margin:0 0 4px}.pp-pop p{margin:0;color:var(--muted);line-height:1.45}
+.pp-pop .menu{display:grid;gap:2px;margin-top:2px}
+.pp-pop .menu button{text-align:left;padding:8px 10px;border-radius:8px;border:0;background:transparent;color:var(--ink);font-size:13px;font-weight:600}
+.pp-pop .menu button:hover{background:var(--field)}
+.qr{display:block;width:132px;height:132px;margin:8px auto 4px;padding:8px;border-radius:10px;background:#fff}
+.pp-toast{position:absolute;left:50%;bottom:10px;transform:translate(-50%,16px);opacity:0;pointer-events:none;padding:7px 14px;border-radius:99px;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:700;white-space:nowrap;transition:opacity .2s,transform .2s;z-index:6}
+.pp-toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* 3D cursor + click effects */
+html.has-cur,html.has-cur *{cursor:none!important}
+html.has-cur input,html.has-cur textarea{cursor:text!important}
+.cur-ring,.cur-core,.fx-layer{position:fixed;left:0;top:0;pointer-events:none}
+.cur-ring{z-index:9998;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;opacity:0;border:1.5px solid color-mix(in srgb,var(--accent) 70%,transparent);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.35),transparent 55%);box-shadow:0 10px 24px -6px color-mix(in srgb,var(--accent) 60%,transparent),inset 0 0 0 1px rgba(255,255,255,.18);transform-style:preserve-3d;will-change:transform;transition:opacity .25s,border-color .25s,background .25s}
+.cur-ring::before{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid transparent;border-top-color:var(--c2);border-bottom-color:var(--c4);animation:curspin 2.2s linear infinite}
+.cur-core{z-index:9999;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;opacity:0;background:radial-gradient(circle at 32% 28%,#fff 0,var(--accent) 48%,#0b1a5e 100%);box-shadow:0 4px 10px rgba(0,0,0,.4);will-change:transform;transition:opacity .25s}
+.cur-on .cur-ring,.cur-on .cur-core{opacity:1}
+.cur-hover .cur-ring{border-color:var(--c2);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.45),color-mix(in srgb,var(--c2) 18%,transparent) 70%)}
+.cur-text .cur-ring,.cur-text .cur-core,.cur-away .cur-ring,.cur-away .cur-core{opacity:0}
+@keyframes curspin{to{transform:rotate(360deg)}}
+.fx-layer{inset:0;width:auto;height:auto;z-index:9997;overflow:hidden}
+.fx{position:absolute;left:0;top:0;pointer-events:none;will-change:transform,opacity}
+@media(prefers-reduced-motion:reduce){.cur-ring::before{animation:none}.ent.new,.pp-pop,.pv{animation:none}}
+@media(max-width:700px){button.chip{min-height:36px;padding-inline:13px}.ent button.mini{min-height:36px}.star{width:34px;height:34px;margin:-6px -6px -6px 0}.ibtn{width:38px;height:38px}.pp-list{max-height:340px}.srow .mini{min-height:36px}.pp-pop{right:8px}}
 /* Video walkthrough */
 .video{position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 20px 50px rgba(0,0,0,.18)}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -299,6 +411,8 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
 .vchap a:hover{border-color:var(--accent);color:var(--accent)}
 .vid-note{text-align:center;color:var(--muted);font-size:14.5px;margin:14px 0 0}
 </style>
+</head>
+<body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="logo" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="var(--btn)" style="fill:var(--btn)"/><rect x="11" y="9" width="18" height="22" rx="4" fill="none" stroke="#fff" stroke-width="2" style="stroke:var(--on)"/><path d="M15 18h10M15 22h10M15 26h6" stroke="#fff" stroke-width="2" stroke-linecap="round" style="stroke:var(--on)"/></symbol>
@@ -333,11 +447,12 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
 <header class="nav">
   <div class="in">
     <a class="brand" href="#top" aria-label="Copyit home"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg>Copyit</a>
-    <nav class="nav-links" aria-label="Sections">
-      <a href="#watch">Watch</a><a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#share">QR share</a><a href="#privacy">Privacy</a><a href="#install">Install guide</a><a href="#faq">FAQ</a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a href="#watch">Watch</a><a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#share">QR share</a><a href="#privacy">Privacy</a><a href="#install">Install guide</a><a href="#faq">FAQ</a><a href="#install" class="nl-install">Install</a>
     </nav>
     <div class="nav-end">
       <button type="button" class="mode-btn" id="modeBtn" aria-label="Switch between light and dark mode" title="Light / dark"><svg class="i moon"><use href="#moon"/></svg><svg class="i sun"><use href="#sun"/></svg></button>
+      <button type="button" class="mode-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><svg class="i" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round"><path class="m1" d="M4 7h16M4 12h16M4 17h16"/><path class="m2" d="M6 6l12 12M18 6L6 18"/></svg></button>
       <a class="btn primary sm" href="#install">Install</a>
     </div>
   </div>
@@ -352,8 +467,8 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
       <p class="lede">Copyit keeps the text, links, code, images and videos you want to reuse. Search them, tag them, sort them into folders, copy them in the format you need, and open short clips on your phone by scanning a QR code.</p>
       <div class="cta">
         <a class="btn primary lg" href="https://github.com/Socialmania99/copyit/releases/latest" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#down"/></svg>Download from GitHub</a>
-        <a class="btn lg" href="#install">Step-by-step install guide</a>
-        <a class="btn lg" href="#watch"><svg class="i"><use href="#vid"/></svg>Watch the video</a>
+        <a class="btn lg" href="#install">Install guide</a>
+        <a class="btn lg" href="#watch"><svg class="i"><use href="#vid"/></svg>Watch video</a>
       </div>
       <div class="trust">
         <span><svg class="i"><use href="#check"/></svg>No account</span>
@@ -362,19 +477,23 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
         <span><svg class="i"><use href="#check"/></svg>Free</span>
       </div>
     </div>
-    <div class="stage">
-      <div class="browser" aria-label="Copyit popup example">
+    <div class="stage" id="demoStage">
+      <div class="browser" id="demoBrowser" aria-label="Interactive Copyit popup demo">
         <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">any page you are reading</span></div>
-        <div class="pp">
-          <div class="pp-top"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg><div class="grow"><h4>Copyit</h4><p>4 saved clips</p></div><svg class="i" style="color:var(--faint)"><use href="#heart"/></svg></div>
-          <div class="search"><svg class="i"><use href="#search"/></svg>Search clips, #tags…</div>
-          <div class="chips"><span class="chip on">All</span><span class="chip">Links</span><span class="chip">Code</span><span class="chip">Multimedia</span></div>
-          <div class="ent"><span class="tile t1"><svg class="i"><use href="#text"/></svg></span><div><div class="meta"><b>Just now</b><span class="sp"></span><svg class="i" style="width:14px;height:14px"><use href="#star"/></svg></div><div class="body">Meeting notes: ship the invoice template on Friday.</div><div class="foot"><small>#work · Text</small><span class="mini"><svg class="i"><use href="#copy"/></svg>Copy</span></div></div></div>
-          <div class="ent"><span class="tile t2"><svg class="i"><use href="#link"/></svg></span><div><div class="meta"><b>2 min ago</b></div><div class="body">https://example.org/guides/color-contrast</div><div class="foot"><small>example.org</small><span class="mini ghost">Preview</span><span class="mini"><svg class="i"><use href="#copy"/></svg>Copy</span></div></div></div>
-          <div class="ent"><span class="tile t4"><svg class="i"><use href="#code"/></svg></span><div><div class="meta"><b>1 h ago</b></div><div class="body code">.card { border-radius: 14px; }</div><div class="foot"><small>CSS</small><span class="mini"><svg class="i"><use href="#copy"/></svg>Copy</span></div></div></div>
+        <div class="pp" id="pp">
+          <div class="pp-top"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg><div class="grow"><h4>Copyit</h4><p id="ppCount">6 saved clips</p></div><button type="button" class="ibtn" id="ppHeart" aria-label="Support Copyit (demo)" aria-expanded="false"><svg class="i"><use href="#heart"/></svg></button></div>
+          <div class="srow"><label class="search"><svg class="i"><use href="#search"/></svg><input id="ppSearch" type="search" placeholder="Search clips, #tags…" autocomplete="off" aria-label="Search demo clips"></label><button type="button" class="mini" id="ppSave"><svg class="i"><use href="#plus"/></svg>Save</button></div>
+          <div class="chips" id="ppChips" role="tablist" aria-label="Filter by type"><button type="button" class="chip on" data-f="all" role="tab" aria-selected="true">All</button><button type="button" class="chip" data-f="link" role="tab" aria-selected="false">Links</button><button type="button" class="chip" data-f="code" role="tab" aria-selected="false">Code</button><button type="button" class="chip" data-f="media" role="tab" aria-selected="false">Multimedia</button></div>
+          <div class="pp-list" id="ppList" aria-live="polite">
+            <div class="ent"><span class="tile t1"><svg class="i"><use href="#text"/></svg></span><div><div class="meta"><b>Just now</b><span class="sp"></span><svg class="i" style="width:14px;height:14px"><use href="#star"/></svg></div><div class="body">Meeting notes: ship the invoice template on Friday.</div><div class="foot"><small>#work · Text</small><span class="mini"><svg class="i"><use href="#copy"/></svg>Copy</span></div></div></div>
+            <div class="ent"><span class="tile t2"><svg class="i"><use href="#link"/></svg></span><div><div class="meta"><b>2 min ago</b></div><div class="body">https://example.org/guides/color-contrast</div><div class="foot"><small>example.org</small><span class="mini ghost">Preview</span><span class="mini"><svg class="i"><use href="#copy"/></svg>Copy</span></div></div></div>
+            <div class="ent"><span class="tile t4"><svg class="i"><use href="#code"/></svg></span><div><div class="meta"><b>1 h ago</b></div><div class="body code">.card { border-radius: 14px; }</div><div class="foot"><small>CSS</small><span class="mini"><svg class="i"><use href="#copy"/></svg>Copy</span></div></div></div>
+          </div>
+          <div class="pp-pop" id="ppPop" hidden></div>
+          <div class="pp-toast" id="ppToast" role="status" aria-live="polite"></div>
         </div>
       </div>
-      <p class="demo-note">Illustration of the popup. Open it with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Y</kbd>.</p>
+      <p class="demo-note"><b>Try it:</b> search, filter, copy, star, preview, reveal. Demo only: nothing is saved or copied. Real shortcut: <span style="white-space:nowrap"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Y</kbd></span></p>
     </div>
   </div>
 </section>
@@ -672,6 +791,16 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
     var c = e.target.closest('[data-copy]');
     if (c) copy(c.getAttribute('data-copy'));
   });
+  (function () {
+    var btn = document.getElementById('menuBtn'), nav = document.getElementById('navLinks');
+    if (!btn || !nav) return;
+    function set(o) { nav.classList.toggle('open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); btn.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); }
+    btn.addEventListener('click', function () { set(!nav.classList.contains('open')); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.nav')) set(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 900) set(false); });
+  })();
   var tt;
   function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(function () { t.hidden = true; }, 2200); }
   function fallback(txt) {
@@ -687,3 +816,167 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
   }
 })();
 </script>
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var fine = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ---------- Interactive demo popup ---------- */
+  var list = $('#ppList'); if (list) {
+    var pp = $('#pp'), pop = $('#ppPop'), toastEl = $('#ppToast'), search = $('#ppSearch'), count = $('#ppCount');
+    var filter = 'all', q = '', uid = 10, tt;
+    var clips = [
+      { id: 1, type: 'text', t: 1, time: 'Just now', body: 'Meeting notes: ship the invoice template on Friday.', foot: '#work · Text', star: true, n: 0 },
+      { id: 2, type: 'link', t: 2, time: '2 min ago', body: 'https://example.org/guides/color-contrast', foot: 'example.org', n: 0 },
+      { id: 3, type: 'code', t: 4, time: '1 h ago', body: '.card { border-radius: 14px; }', foot: 'CSS', n: 0 },
+      { id: 4, type: 'media', t: 3, time: 'Yesterday', body: 'screenshot-dashboard.png', foot: '#design · Image', n: 0 },
+      { id: 5, type: 'text', t: 5, time: 'Yesterday', body: 'API key: sk_live_51H8xA2B9c0dEfG', foot: 'Sensitive · blurred', secret: true, hidden: true, n: 0 },
+      { id: 6, type: 'code', t: 4, time: '2 days ago', body: '{"theme":"dark","lang":"en"}', foot: 'JSON', copyas: true, n: 0 }
+    ];
+    var samples = ['Call dentist: Tuesday 4:30 pm', 'https://example.org/blog/design-tokens', 'npm install --save-dev vitest', 'Order #48213 shipped to Pune', 'Idea: add dark mode to the invoice page'];
+    var icon = { text: 'text', link: 'link', code: 'code', media: 'image' };
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function ic(n, st) { return '<svg class="i"' + (st ? ' style="' + st + '"' : '') + '><use href="#' + n + '"/></svg>'; }
+    function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 1700); }
+    function closePop() { pop.hidden = true; var hb = $('#ppHeart'); hb.setAttribute('aria-expanded', 'false'); }
+    function openPop(html, anchor) {
+      pop.innerHTML = html; pop.hidden = false;
+      var pr = pp.getBoundingClientRect(), ar = anchor.getBoundingClientRect();
+      var top = ar.bottom - pr.top + 6;
+      pop.style.top = Math.min(top, pr.height - pop.offsetHeight - 8) + 'px';
+      pop.style.right = Math.max(8, pr.right - ar.right) + 'px';
+    }
+    function qrSvg() {
+      var N = 21, s = 'a', r = 7, out = '';
+      function f(x, y) { out += '<rect x="' + x + '" y="' + y + '" width="7" height="7" fill="#111"/><rect x="' + (x + 1) + '" y="' + (y + 1) + '" width="5" height="5" fill="#fff"/><rect x="' + (x + 2) + '" y="' + (y + 2) + '" width="3" height="3" fill="#111"/>'; }
+      f(0, 0); f(N - 7, 0); f(0, N - 7);
+      var seed = 7;
+      for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) {
+        if ((x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9)) continue;
+        seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+        if ((seed >> 16) % 2) out += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="#111"/>';
+      }
+      return '<svg class="qr" viewBox="0 0 21 21" shape-rendering="crispEdges" role="img" aria-label="Example QR code">' + out + '</svg>';
+    }
+    function match(c) {
+      if (filter !== 'all' && c.type !== filter) return false;
+      if (!q) return true;
+      var hay = (c.secret ? c.foot : c.body + ' ' + c.foot).toLowerCase();
+      return q.split(/\s+/).every(function (w) { return hay.indexOf(w) > -1; });
+    }
+    function render(newId) {
+      var rows = clips.filter(match);
+      count.textContent = clips.length + ' saved clip' + (clips.length === 1 ? '' : 's');
+      if (!rows.length) { list.innerHTML = '<div class="pp-empty">No clips match. Try another word or tap <b>All</b>.</div>'; return; }
+      list.innerHTML = rows.map(function (c) {
+        var body = c.type === 'code' ? '<div class="body code">' + esc(c.body) + '</div>'
+          : c.media ? '<div class="body">' + esc(c.body) + '</div><div class="thumb" aria-hidden="true"></div>'
+          : '<div class="body' + (c.hidden ? ' blurred' : '') + '">' + esc(c.body) + '</div>';
+        if (c.type === 'media') body = '<div class="body">' + esc(c.body) + '</div><div class="thumb" aria-hidden="true"></div>';
+        var acts = '';
+        if (c.type === 'link') acts += '<button type="button" class="mini ghost" data-a="pv">Preview</button><button type="button" class="mini ghost" data-a="qr" aria-label="Show QR code">' + ic('qr') + '</button>';
+        if (c.secret) acts += '<button type="button" class="mini ghost" data-a="rev">' + (c.hidden ? 'Reveal' : 'Hide') + '</button>';
+        if (c.copyas) acts += '<button type="button" class="mini ghost" data-a="as">Copy as</button>';
+        acts += '<button type="button" class="mini' + (c.done ? '' : '') + '" data-a="copy">' + (c.done ? ic('check') + 'Copied' : ic('copy') + 'Copy') + '</button>';
+        return '<div class="ent' + (c.id === newId ? ' new' : '') + '" data-id="' + c.id + '"><span class="tile t' + c.t + '">' + ic(icon[c.type]) + '</span><div><div class="meta"><b>' + c.time + '</b>' + (c.n ? '<span class="x">×' + c.n + '</span>' : '') + '<span class="sp"></span><button type="button" class="star' + (c.star ? ' on' : '') + '" data-a="star" aria-label="' + (c.star ? 'Unstar' : 'Star') + ' clip" aria-pressed="' + (c.star ? 'true' : 'false') + '">' + ic('star', 'width:14px;height:14px') + '</button></div>' + body + '<div class="foot"><small>' + esc(c.foot) + '</small>' + acts + '</div>' + (c.pv ? '<div class="pv"><i></i><div><b>Color contrast guide</b><span>How to pick text and background colors that stay readable. example.org</span></div></div>' : '') + '</div></div>';
+      }).join('');
+    }
+    function find(el) { var e = el.closest('.ent'); if (!e) return null; var id = +e.getAttribute('data-id'); return clips.filter(function (c) { return c.id === id; })[0]; }
+    list.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-a]'); if (!b) return;
+      var c = find(b); if (!c) return; var a = b.getAttribute('data-a'); closePop();
+      if (a === 'copy') { c.n++; c.done = true; render(); toast('Copied to clipboard (demo)'); setTimeout(function () { c.done = false; if (list.isConnected) render(); }, 1400); }
+      else if (a === 'star') { c.star = !c.star; render(); toast(c.star ? 'Starred' : 'Removed star'); }
+      else if (a === 'pv') { c.pv = !c.pv; render(); }
+      else if (a === 'rev') { c.hidden = !c.hidden; render(); }
+      else if (a === 'qr') { openPop('<h5>Scan to open</h5><p>Shows on your phone. Works offline. (Demo code.)</p>' + qrSvg(), b); }
+      else if (a === 'as') { openPop('<h5>Copy as</h5><div class="menu"><button type="button" data-as="JSON">JSON</button><button type="button" data-as="Markdown">Markdown</button><button type="button" data-as="Rich text">Rich text</button><button type="button" data-as="Plain text">Plain text</button></div>', b); }
+    });
+    pop.addEventListener('click', function (e) { var b = e.target.closest('[data-as]'); if (b) { closePop(); toast('Copied as ' + b.getAttribute('data-as') + ' (demo)'); } });
+    $('#ppChips').addEventListener('click', function (e) {
+      var b = e.target.closest('.chip'); if (!b) return; filter = b.getAttribute('data-f'); closePop();
+      [].forEach.call(this.children, function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      render();
+    });
+    search.addEventListener('input', function () { q = search.value.trim().toLowerCase().replace(/^#/, '#'); closePop(); render(); });
+    $('#ppSave').addEventListener('click', function () {
+      var s = samples[uid % samples.length], isLink = /^https?:/.test(s), isCode = /^npm /.test(s);
+      clips.unshift({ id: ++uid, type: isLink ? 'link' : isCode ? 'code' : 'text', t: isLink ? 2 : isCode ? 4 : 1, time: 'Just now', body: s, foot: isLink ? 'example.org' : isCode ? 'Shell' : 'Text', n: 0 });
+      if (clips.length > 12) clips.pop();
+      filter = 'all'; q = ''; search.value = ''; closePop();
+      [].forEach.call($('#ppChips').children, function (x) { var on = x.getAttribute('data-f') === 'all'; x.classList.toggle('on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      render(clips[0].id); list.scrollTop = 0; toast('Saved from your clipboard (demo)');
+    });
+    $('#ppHeart').addEventListener('click', function (e) {
+      e.stopPropagation(); var open = pop.hidden; closePop();
+      if (open) { this.setAttribute('aria-expanded', 'true'); openPop('<h5>Thank you!</h5><p>In the real extension the heart opens support links. Copyit stays free and private.</p>', this); }
+    });
+    document.addEventListener('click', function (e) { if (!pop.hidden && !e.target.closest('#ppPop') && !e.target.closest('[data-a="qr"],[data-a="as"],#ppHeart')) closePop(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePop();
+      if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test((document.activeElement || {}).tagName || '')) {
+        var r = $('.hero').getBoundingClientRect(); if (r.bottom > 80 && r.top < innerHeight) { e.preventDefault(); search.focus(); }
+      }
+    });
+    render();
+  }
+
+  /* ---------- Hero: click effects, spotlight, 3D tilt ---------- */
+  var hero = $('.hero'), fxl = document.createElement('div'); fxl.className = 'fx-layer'; fxl.setAttribute('aria-hidden', 'true'); document.body.appendChild(fxl);
+  var cols = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)', 'var(--c5)'];
+  function burst(x, y) {
+    if (calm || !fxl.animate) return;
+    var w = document.createElement('div'); w.className = 'fx';
+    w.style.cssText = 'width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;border:2px solid var(--accent);left:' + x + 'px;top:' + y + 'px';
+    fxl.appendChild(w); w.animate([{ transform: 'scale(.2)', opacity: .9 }, { transform: 'scale(3.2)', opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = function () { w.remove(); };
+    var n = 12;
+    for (var i = 0; i < n; i++) {
+      var p = document.createElement('div'); p.className = 'fx'; var s = 5 + Math.random() * 6, ang = (i / n) * 6.283 + Math.random() * .5, d = 36 + Math.random() * 56, sq = i % 3 === 0;
+      p.style.cssText = 'width:' + s + 'px;height:' + (sq ? s * 2.2 : s) + 'px;margin:' + (-s / 2) + 'px 0 0 ' + (-s / 2) + 'px;border-radius:' + (sq ? '3px' : '50%') + ';background:' + cols[i % 5] + ';left:' + x + 'px;top:' + y + 'px';
+      fxl.appendChild(p);
+      p.animate([{ transform: 'translate(0,0) rotate(0) scale(1)', opacity: 1 }, { transform: 'translate(' + Math.cos(ang) * d + 'px,' + Math.sin(ang) * d + 'px) rotate(' + (Math.random() * 240 - 120) + 'deg) scale(.2)', opacity: 0 }], { duration: 520 + Math.random() * 260, easing: 'cubic-bezier(.15,.8,.25,1)' }).onfinish = (function (el) { return function () { el.remove(); }; })(p);
+    }
+  }
+  if (hero) hero.addEventListener('pointerdown', function (e) { if (e.button === 0 || e.pointerType === 'touch') burst(e.clientX, e.clientY); });
+
+  if (!fine || calm) return;
+  var ring = document.createElement('div'), core = document.createElement('div'), root = document.documentElement;
+  ring.className = 'cur-ring'; core.className = 'cur-core'; ring.setAttribute('aria-hidden', 'true'); core.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(ring); document.body.appendChild(core);
+  var mx = -100, my = -100, rx = -100, ry = -100, vx = 0, vy = 0, down = false, scl = 1, started = false;
+  var browser = $('#demoBrowser'), tiltX = 0, tiltY = 0, tX = 0, tY = 0;
+  function start() { if (started) return; started = true; root.classList.add('has-cur', 'cur-on'); }
+  window.addEventListener('pointermove', function (e) {
+    if (e.pointerType === 'touch') return; start(); mx = e.clientX; my = e.clientY;
+    var t = e.target; root.classList.remove('cur-away');
+    root.classList.toggle('cur-hover', !!(t.closest && t.closest('a,button,[role="tab"],label,summary,[data-copy]')));
+    root.classList.toggle('cur-text', !!(t.closest && t.closest('input,textarea')));
+    if (t.tagName === 'IFRAME') root.classList.add('cur-away');
+    if (hero) {
+      var r = hero.getBoundingClientRect(), inside = my >= r.top && my <= r.bottom;
+      hero.classList.toggle('spot', inside);
+      if (inside) {
+        hero.style.setProperty('--mx', (mx - r.left) + 'px'); hero.style.setProperty('--my', (my - r.top) + 'px');
+        if (browser) { var b = browser.getBoundingClientRect(); tX = Math.max(-1, Math.min(1, (mx - (b.left + b.width / 2)) / 520)); tY = Math.max(-1, Math.min(1, (my - (b.top + b.height / 2)) / 520)); }
+      } else { tX = 0; tY = 0; }
+    }
+  }, { passive: true });
+  document.addEventListener('pointerdown', function () { down = true; });
+  document.addEventListener('pointerup', function () { down = false; });
+  document.addEventListener('mouseleave', function () { root.classList.add('cur-away'); });
+  document.addEventListener('mouseenter', function () { root.classList.remove('cur-away'); });
+  (function loop() {
+    var px = rx, py = ry;
+    rx += (mx - rx) * .18; ry += (my - ry) * .18; vx += ((rx - px) - vx) * .3; vy += ((ry - py) - vy) * .3;
+    var hov = root.classList.contains('cur-hover'), target = down ? .78 : hov ? 1.55 : 1; scl += (target - scl) * .2;
+    var rY = Math.max(-55, Math.min(55, vx * 3.2)), rX = Math.max(-55, Math.min(55, -vy * 3.2));
+    ring.style.transform = 'translate3d(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px,0) perspective(180px) rotateX(' + rX.toFixed(1) + 'deg) rotateY(' + rY.toFixed(1) + 'deg) scale(' + scl.toFixed(3) + ')';
+    core.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0) scale(' + (down ? 1.5 : hov ? .6 : 1) + ')';
+    if (browser) { tiltX += (tX - tiltX) * .08; tiltY += (tY - tiltY) * .08; browser.style.transform = 'perspective(1100px) rotateY(' + (tiltX * 7).toFixed(2) + 'deg) rotateX(' + (-tiltY * 6).toFixed(2) + 'deg)'; }
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
