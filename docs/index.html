@@ -291,6 +291,13 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
   .dash{padding:14px}.nav .btn.sm{display:none}
 }
 @media(max-width:420px){.stats{grid-template-columns:minmax(0,1fr)}.support{grid-template-columns:minmax(0,1fr)}}
+/* Video walkthrough */
+.video{position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 20px 50px rgba(0,0,0,.18)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vchap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:960px;margin:16px auto 0}
+.vchap a{padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13.5px;font-weight:600;text-decoration:none}
+.vchap a:hover{border-color:var(--accent);color:var(--accent)}
+.vid-note{text-align:center;color:var(--muted);font-size:14.5px;margin:14px 0 0}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -327,7 +334,7 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
   <div class="in">
     <a class="brand" href="#top" aria-label="Copyit home"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg>Copyit</a>
     <nav class="nav-links" aria-label="Sections">
-      <a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#share">QR share</a><a href="#privacy">Privacy</a><a href="#install">Install guide</a><a href="#faq">FAQ</a>
+      <a href="#watch">Watch</a><a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#share">QR share</a><a href="#privacy">Privacy</a><a href="#install">Install guide</a><a href="#faq">FAQ</a>
     </nav>
     <div class="nav-end">
       <button type="button" class="mode-btn" id="modeBtn" aria-label="Switch between light and dark mode" title="Light / dark"><svg class="i moon"><use href="#moon"/></svg><svg class="i sun"><use href="#sun"/></svg></button>
@@ -346,6 +353,7 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
       <div class="cta">
         <a class="btn primary lg" href="https://github.com/Socialmania99/copyit/releases/latest" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#down"/></svg>Download from GitHub</a>
         <a class="btn lg" href="#install">Step-by-step install guide</a>
+        <a class="btn lg" href="#watch"><svg class="i"><use href="#vid"/></svg>Watch the video</a>
       </div>
       <div class="trust">
         <span><svg class="i"><use href="#check"/></svg>No account</span>
@@ -378,6 +386,17 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
     <div class="fact"><b>5 KB</b><span>of text or a link opens on a phone by scanning</span></div>
     <div class="fact"><b>2</b><span>modes: Light and Dark, one tap to switch</span></div>
   </div></div>
+</section>
+
+<section class="sec" id="watch">
+  <div class="in">
+    <div class="head"><span class="kick">Video</span><h2>Watch Copyit in 2 minutes</h2><p>Download it, install it in Chrome and see every main feature in action.</p></div>
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/6jOjqSzReSs" title="Copyit walkthrough: free clipboard history manager for Chrome" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div class="vchap" aria-label="Jump to a part of the video"><a href="https://youtu.be/6jOjqSzReSs?t=0" target="_blank" rel="noopener noreferrer">0:00 Intro</a><a href="https://youtu.be/6jOjqSzReSs?t=24" target="_blank" rel="noopener noreferrer">0:24 Install</a><a href="https://youtu.be/6jOjqSzReSs?t=40" target="_blank" rel="noopener noreferrer">0:40 Right-click save</a><a href="https://youtu.be/6jOjqSzReSs?t=53" target="_blank" rel="noopener noreferrer">0:53 Search &amp; organise</a><a href="https://youtu.be/6jOjqSzReSs?t=78" target="_blank" rel="noopener noreferrer">1:18 Copy as &amp; QR</a><a href="https://youtu.be/6jOjqSzReSs?t=98" target="_blank" rel="noopener noreferrer">1:38 Dashboard</a><a href="https://youtu.be/6jOjqSzReSs?t=115" target="_blank" rel="noopener noreferrer">1:55 Shortcuts &amp; themes</a></div>
+    <p class="vid-note">Video not loading? <a href="https://youtu.be/6jOjqSzReSs" target="_blank" rel="noopener noreferrer">Watch it on YouTube</a>.</p>
+  </div>
 </section>
 
 <section class="sec" id="features">
@@ -556,6 +575,7 @@ footer small{display:block;margin-top:6px;font-size:13px;color:var(--faint)}
     <div class="head"><span class="kick">Install guide</span><h2>Install Copyit in about five minutes</h2><p>Copyit is not on the Chrome Web Store yet. You install it by hand with Chrome's Developer mode. It is safe, it takes a few clicks, and the steps below are written for first-timers.</p></div>
     <div class="guide">
       <div class="gnote"><svg class="i"><use href="#info"/></svg><p><b>What you need.</b> A computer with Google Chrome (Windows, Mac, Linux or Chromebook). The Chrome mobile app cannot install extensions. Edge and Brave use the same steps, with <code>edge://extensions</code> or <code>brave://extensions</code> instead.</p></div>
+      <div class="gnote"><svg class="i"><use href="#vid"/></svg><p><b>Prefer to watch?</b> The video shows every step below. <a href="https://youtu.be/6jOjqSzReSs?t=24" target="_blank" rel="noopener noreferrer">Install steps start at 0:24</a>, or <a href="#watch">play it at the top of the page</a>.</p></div>
       <ol class="gsteps">
         <li class="gstep"><div><h3>Download the file from GitHub</h3><p>Open the GitHub link below. Under <b>Assets</b>, click <code>copyit-v1.0.zip</code>. It goes to your <b>Downloads</b> folder.</p>
           <div class="cta"><a class="btn primary" href="https://github.com/Socialmania99/copyit/releases/latest" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#down"/></svg>Open the GitHub release</a></div></div></li>
